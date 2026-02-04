@@ -113,7 +113,12 @@ if (Get-Command trash -ErrorAction SilentlyContinue) {
     function rm { trash $args; Write-Host "🗑️  Enviado a la papelera" -ForegroundColor DarkGray }
 }
 
-# --- 7. GIT (KIT GENTLEMAN) ---
+# --- 7. GIT (KIT GENTLEMAN BLINDADO) ---
+# 🛡️ IMPORTANTE: Esto evita que PowerShell use sus propios 'gc' y 'gp'
+if (Test-Path alias:gc) { Remove-Item alias:gc -Force }
+if (Test-Path alias:gp) { Remove-Item alias:gp -Force }
+if (Test-Path alias:gl) { Remove-Item alias:gl -Force }
+
 function g { git $args }
 function ga { git add $args }
 function gaa { git add . }
