@@ -150,6 +150,14 @@ function c { clear }
 function q { exit }  # Salir rápido
 function reload { . $PROFILE; Write-Host "♻️ Config recargada" -ForegroundColor Green }
 
+# Listar puertos escuchando y qué proceso los usa
+function ports {
+    Get-NetTCPConnection -State Listen | 
+    Select-Object LocalPort, @{N="Process";E={(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).ProcessName}}, OwningProcess | 
+    Sort-Object LocalPort | 
+    Format-Table -AutoSize
+}
+
 # KILL PORT (Matar puerto bloqueado)
 function kp {
     param([int]$port)
